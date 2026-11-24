@@ -1,14 +1,33 @@
 *{
     box-sizing: border-box;
 }
+:root {
+    color-scheme: light dark;
+
+    --marca: #0066cc;
+    --sobre-marca: #fff;
+    --exito: hsl(146 85% 26);
+    --error : #c0392b;
+    --fondo : #f5f5f7;
+    --fondo-suave: #e5e5ea;
+    --tarjeta: #fff;
+    --resalte: #e8f1fb;
+    --texto: #1d1d1f;
+    --texto-suave: #6e6e73;
+    --borde: #d2d2d7;
+
+    --radio: 12px;
+    --espacio : 1rem;
+    --fuente : system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
 body{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: #1d1d1f;
-    background-color: #f5f5f7;
+    font-family: var(--fuente);
+    color: var(--texto);
+    background-color: var(--fondo);
     line-height: 1.5;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 1rem;
+    max-width: 1100px;
+    margin-inline: auto;
+    padding: max(var(--espacio), 2vw);
     display: grid;
     /* minmax(auto,1fr); */
     grid-template-columns: 300px minmax(0,1fr); 
@@ -38,7 +57,7 @@ header {
     justify-content: space-between;
     gap: 16px;
     align-items: center;
-    background-color: #fff;
+    background-color: var(--sobre-marca);
     padding: 1rem 1.25rem;
     border-radius: 12px;
     margin-bottom: 1.5rem; 
@@ -50,8 +69,8 @@ header h1 {
     align-items: center;
     width: 140px;
     height: 44px;
-    background-color: #0066cc;
-    color: #fff;
+    background-color: var(--marca);
+    color: var(--sobre-marca);
     border-radius: 8px;
     font-size: 20px;
     margin: 0;
@@ -61,8 +80,8 @@ aside {
     flex-direction: column;
     align-items: stretch;
     gap: 8px;
-    background-color: #fff;
-    border: 1px solid #d2d2d7;
+    background-color: var(--sobre-marca);
+    border: 1px solid var(--borde);
     border-radius: 12px;
     padding: 1.5rem;
 }
@@ -95,26 +114,26 @@ caption {
     margin-bottom: 0.5rem;
 }
 th, td {
-    border: 1px solid #d2d2d7;
+    border: 1px solid var(--borde);
     padding: 0.5rem 0.75rem;
     text-align: left;
 }
 th{
-    background-color: #e5e5ea;
+    background-color: var(--fondo-suave);
 }
 h1{
-    color: #0066cc;
+    color: var(--marca);
     font-size: 2rem;
 }
 h2{
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 1rem + 1.2vw, 1.5rem);
 }
 h2::after{
     content: "";
     display: block;
     width: 3rem;
     height: 3px;
-    background-color: #0066cc;
+    background-color: var(--marca);
     margin-top: 0.25rem;
 }
 h3{
@@ -131,27 +150,33 @@ figcaption {
     letter-spacing: 0.04em;
 }
 a{
-    color: #0066cc;
+    color: var(--marca);
 }
 strong {
-    color: hsl(146 85% 26);
+    color: var(--exito);
 }
 article {
     display: flex;
     flex-direction: column;
     text-align: center;
-    background-color: #fff;
-    border: 1px solid #d2d2d7;
+    background-color: var(--tarjeta);
+    border: 1px solid var(--borde);
     border-radius: 12px;
     padding: 1rem;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+article:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 article button {
     margin-top: auto;
     align-self: center;
 }
 article img {
-    max-width: 100%;
     height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
 }
 article h3 {
     margin: 0.25rem 0;
@@ -160,16 +185,25 @@ article p {
     margin: 0 0 0.75rem;
 }
 button {
-    background-color: #0066cc;
-    color: #fff;
+    background-color: var(--marca);
+    color: var(--sobre-marca);
     cursor: pointer;
     border: 0;
     border-radius: 999px;
     padding: 0.6em 1.2em;
+    transition: transform 0.5s ease, filter 0.5s linear;
+}
+button:hover,
+button:focus-visible {
+    filter: brightness(1.2);
+    transform: translateY(-1px);
+}
+button:active {
+    transform: translateY(0) scale(0.97);
 }
 .destacado{
-    background-color: #e8f1fb;
-    border-color: #0066cc;
+    background-color: var(--resalte);
+    border-color: var(--marca);
     border-width: 2px;
     grid-column: span 2;
     grid-row: span 2;
@@ -185,19 +219,24 @@ button {
 .destacado::before{
     content:"Destacado";
     display: inline-block;
-    color: #0066cc;
+    color: var(--marca);
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    border: 1px solid #0066cc;
+    border: 1px solid var(--marca);
     border-radius: 999px;
     padding: 0.15rem 0.6rem;
     margin-bottom: 0.5rem;
     align-self: center;
+    animation: latido 1.6s ease-in-out infinite alternate;
+}
+@keyframes latido {
+    from { transform: scale(1);}
+    to {transform: scale(1.1);}
 }
 #compra{
-    background-color: #fff;
+    background-color: var(--sobre-marca);
     border-radius: 12px;
     padding: 1.5rem;
     margin-top: 24px;
@@ -215,8 +254,9 @@ button {
     flex: 0 0 180px;
 }
 fieldset {
-    border: 1px solid #d2d2d7;
-    border-radius: 18px;
+    --radio: 8px;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
     padding: 1rem;
     margin-bottom: 1rem;
 }
@@ -237,8 +277,10 @@ fieldset p:last-child {
     min-width: 0;
     width: 100%;
     padding: 0.5rem 0.75rem;
-    border: 1px solid #d2d2d7;
-    border-radius: 8px;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    color: var(--texto);
+    background-color: var(--fondo);
     margin-top: 0.25rem;
 }
 #compra input[type="radio"],
@@ -253,7 +295,7 @@ input[type="checkbox"] + label {
 #compra input:user-invalid,
 #compra select:user-invalid,
 #compra textarea:user-invalid{
-    border-color: #c0392b;
+    border-color: var(--error);
 }
 nav a {
     text-decoration: none;
@@ -282,9 +324,9 @@ footer{
     gap: 16px;
     margin-top: 2rem;
     padding: 1.5rem 0;
-    border-top: 1px solid #d2d2d7;
+    border-top: 1px solid var(--borde);
     text-align: center;
-    color: #6e6e73;
+    color: var(--texto-suave);
     font-size: 0.875rem;
 }
 footer p,
@@ -302,6 +344,13 @@ footer address {
     grid-auto-rows: 1fr;
     gap: 24px 16px;
 }
+.productos article {
+    animation: aparecer 5s ease-out backwards;
+}
+@keyframes aparecer {
+    from {opacity: 0; transform: translateY(12px);}
+    to {opacity: 1; transform: translateY(0);}
+}
 .envio{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -317,4 +366,73 @@ footer address {
 
 .campo-ancho{
     grid-column: 1/-1;
+}
+.beneficios {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(min(150px, 100%), 1fr));
+    gap: var(--espacio);
+    margin-bottom: 24px;
+}
+.beneficios p {
+    margin: 0;
+    color: var(--texto-suave);
+    font-size: 0.85rem;
+}
+.beneficios .icono {
+    font-size: 1.75rem;
+    margin: 0 0 0 0.75rem;
+}
+.beneficios h3{
+    margin: 0 0 0 0.25rem;
+    font-size: 1rem;
+}
+@media (max-width : 600px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+    body {
+        grid-template-columns: minmax(0,1fr);
+        grid-template-areas: 
+        "cabecera"
+        "lateral"
+        "contenido"
+        "pie";
+        grid-template-rows: auto auto 1fr auto;
+    }
+    .destacado {
+        grid-column: auto;
+        grid-row: auto;
+    }
+    .envio {
+        grid-template-columns: 1fr;
+    }
+    .productos {
+        grid-auto-rows: auto;
+    }
+    footer {
+        flex-direction: column;
+        align-items: center;
+    }
+    footer address {
+        margin-right: 0;
+    }
+    .beneficios {
+        grid-template-columns: repeat(1, minmax(min(150px, 100%), 1fr));
+    }
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --marca: #3d9bff;
+        --sobre-marca: #0b1220;
+        --exito: #30d158;
+        --error : #ff6b5e;
+        --fondo : #111114;
+        --fondo-suave: #2c2c2e;
+        --tarjeta: #1d1d1f;
+        --resalte: #0e2439;
+        --texto: #f5f5f7;
+        --texto-suave: #a1a1a6;
+        --borde: #3a3a3c;
+    }
 }
